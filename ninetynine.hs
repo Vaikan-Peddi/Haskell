@@ -25,3 +25,17 @@ len :: [a] -> Int
 len [] = 0
 len [a] = 1
 len (a:as) = 1 + len as
+
+
+-- Problem 5: Reverse a list:
+
+rev :: [a] -> [a]
+rev [] = []
+rev (x:xs) = (rev xs) ++ [x]
+
+
+-- Problem 6: Find out whether a list is a palindrome:
+
+palindrome [] = True
+palindrome [_] = True
+palindrome xs = (head xs) == (last xs) && (palindrome $ init $ tail xs)
