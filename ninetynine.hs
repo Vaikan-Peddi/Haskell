@@ -10,3 +10,10 @@ myLast (x:xs) = myLast xs
 myButLast :: [a] -> [a]
 myButLast [x] = []
 myButLast (x:xs) = x : myButLast xs
+
+
+-- Problem 3: Find the kth element of a list:
+
+elementAt :: [a] -> Int -> a
+elementAt (x:_) 1 = x
+elementAt (_:xs) n = elementAt xs (n-1)
