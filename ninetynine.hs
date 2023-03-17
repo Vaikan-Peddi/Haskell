@@ -17,3 +17,11 @@ myButLast (x:xs) = x : myButLast xs
 elementAt :: [a] -> Int -> a
 elementAt (x:_) 1 = x
 elementAt (_:xs) n = elementAt xs (n-1)
+
+
+-- Problem 4: Find the number of elements in a list:
+
+len :: [a] -> Int
+len [] = 0
+len [a] = 1
+len (a:as) = 1 + len as
