@@ -1,4 +1,5 @@
-import Data.List
+import Data.List 
+import Data.Char
 
 {- Missing topics to be written:
 	-> List Comprehension
@@ -7,6 +8,21 @@ import Data.List
 	-> Dollar implementation
 	-> Composite Functions
 	-> Point-Free Functions
+
+	-> Make script snippets for all the learnt functions till now
+-}
+
+{- Explanation on space vs dot vs dollar implementation of functions:
+
+space: a space directly takes inputs one by one that is next to the function.
+dollar: It says that 'wait, not yet. I am the lowest precedence, so let the right side do its job and call me.'
+dot: it is basically composing functions like f . g = f g $ = f ( g ( ) ) = f ( g )
+-}
+
+{-
+Functions in Haskell are only unary, they take only one parameter and then produce another partial function that takes another parameter until all the parameters are considered and an output is formed. 
+
+When using functions, we have to take care that the particular chain of the function working is not disturbed due to precedences. therefore try and use single parameter functions wherever possible, or else use the brackets, or dot or dollar symbols productively so that a correct implementation is done and not mistakenly wrong code written.
 -}
 
 --Pattern Matching
@@ -243,4 +259,81 @@ sum_fold xs = foldl (+) 0 xs
 size_nub :: (Eq a) => [a] -> Int
 size_nub xs = length (nub xs)
  
+-- Needle in the haystack - whole list comparison in another list:
+
+isIn :: (Eq a) => [a] -> [a] -> Bool
+isIn needle haystack = any (isPrefixOf needle) (tails haystack)
+
+encoder :: Int -> String -> String
+encoder offset msg = map (\c -> chr $ ord c + offset) msg
+
+decoder :: Int -> String -> String 
+decoder offset code = map (chr . (subtract offset) . ord) code
+
+-- Return sum of digits
+
+digitSum :: Int -> Int
+digitSum = sum . map digitToInt . show
+
+firstTo :: Int -> Maybe Int
+firstTo n = find (\x -> digitSum x == n) [1..]
+
+add :: Int -> Int -> Int -> Int
+add x y z = x+y+z
+
+-- Partial functions, Multiple Argument functions, Composite functions (one argument and multiple arguments), Unary functions, Lambda functions, Parenthesised functions, Dollared functions, Point-free style of functions. All these types of functions are possible, provide ample examples of these structures and their relations and dependencies.
+
+--Unary functions:
+
+succ' :: Enum a => a -> a
+succ' a = succ a
+
+f :: Floating a => a -> a
+f x = x ** 2
+
+-- All the above examples take in one parameter as by default accepted by haskell, and then returns a single output as expected from a standard haskell program.
+
+-- Partial application of functions:
+
+-- A partial application of function is a function call that receives less parameters than the function is defined for.
+
+add1 :: (Num s) => s -> s
+add1 = (+1) 
+
+-- The above function works by first giving a name to the partially applied function (+) and then when the function is called either by its name or by its original definition which is (+1) with a parameter, then the compiler adds a parameter to the missing operand location and then gives the answer. Partial application is an internal process and only useful for us when we want to name the functions that take partial inputs.
+
+-- Multiple argument functions:
+
+addition :: Num a => a -> a -> a
+addition x y = ((+)x)y
+ 
+-- The above definition is a bit complicated but that is the exact way it works, first the internal + x function is called and now a partially applied function is returnd as an output and thn to that function our y is applied and the final answer is produced. Nothing more is there to understand the Multiple parameter functions.
+
+-- This can also be written as:
+-- addition x y = x + y  or   (+) x y  or  (+y) $ x
+
+-- Composite Functions: 
+-- Composite functions are exactly like those available in mathematics. A chain of functions where each consecutive function takes the output of its previous function until a total application of the final function is produced.
+
+-- Let us create a function that takes a list, then maps it with the square function, then adds them all together and then produces a list of odd number series till the sum of the square of the list:
+
+
+-- [1, 3.. (sum $ map (\x -> x**2) [1, 2, 3, 4, 5])]
+
+-- [1, 3.. (sum . map (\x -> x**2) $ [1, 2, 3, 4, 5])]
+
+-- Let f be a function that takes the output of a funtion g and let g take two inputs: 
+
+-- f(g x y)
+-- f $ g x y
+-- f.g x $ y =====> We cannot pass multiple parameters into a composite function, therefore one parameter is already sent to the composite function and the other is given as an argument.
+
+
+-- Fibonacci series printing:
+
+
+
+
+
+
 
